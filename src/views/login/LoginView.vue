@@ -47,6 +47,8 @@ import link from "../../api/Link.js"
 import apiUrl from "../../api/url.js"
 import { ElMessage } from 'element-plus'
 import useMd5 from "../../hook/index.js"
+import { useRouter } from 'vue-router'
+let router = useRouter()
 
 const MenuData = reactive([
   { txt: "登录",current:true,type:"login" },
@@ -157,6 +159,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
               message: '登录成功',
               type: 'success',
             })
+            router.push("/home")
           }else{
             ElMessage.error("登录失败")
           }
@@ -182,10 +185,6 @@ const submitForm = (formEl: FormInstance | undefined) => {
           }
         })
       }
-
-      
-
-
 
 
     } else {

@@ -1,4 +1,5 @@
 let apiUrl = {
-    register: "/register"
+    register: "/register",
+	userList: "/userList"
 }
 export default apiUrl

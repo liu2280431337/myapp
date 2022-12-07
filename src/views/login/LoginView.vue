@@ -46,6 +46,7 @@ import * as ck from "../../util/verfifcation.js"
 import link from "../../api/Link.js"
 import apiUrl from "../../api/url.js"
 import { ElMessage } from 'element-plus'
+import useMd5 from "../../hook/index.js"
 
 const MenuData = reactive([
   { txt: "登录",current:true,type:"login" },
@@ -150,7 +151,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
     if (valid) {
       if(model.value === "login"){
 
-        link(apiUrl.register,"GET",{},{name:ruleForm.username,pwd:ruleForm.password}).then((ok:any) => {
+        link(apiUrl.register,"GET",{},{name:ruleForm.username,pwd:useMd5(ruleForm.password).value}).then((ok:any) => {
           if(ok.data.length !== 0) {
             ElMessage({
               message: '登录成功',
@@ -164,8 +165,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
       }else{
         let data = {
           name: ruleForm.username,
-          pwd: ruleForm.password
+          pwd: useMd5(ruleForm.password).value
         }
+
         link(apiUrl.register,"POST",data).then((ok:any) => {
           console.log(ok)
           if(Object.keys(ok.data).length !== 0){

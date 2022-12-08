@@ -1,5 +1,7 @@
 <template>
-    <div>缴费管理</div>
+    <div>
+        
+    </div>
 </template>
 
 <script setup>

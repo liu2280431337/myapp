@@ -3,6 +3,11 @@
   <router-view/>
 </template>
 
-<style lang="scss">
+<script setup lang="ts">
+import * as echarts from "echarts"
+import { provide } from "vue"
+provide("echarts",echarts)
+</script>
 
+<style lang="scss">
 </style>

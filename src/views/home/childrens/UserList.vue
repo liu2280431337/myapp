@@ -6,6 +6,11 @@
         <el-table-column prop="num" label="门牌号" />
         <el-table-column prop="hometype" label="房源户型" />
         <el-table-column prop="name" label="户主" />
+        <el-table-column>
+          <template #header>
+            <el-input size="small" placeholder="请输入查询内容" v-model="search" @blur="searchLink" />
+          </template>
+        </el-table-column>
       </el-table>
 			<!-- 分页区域 -->
 			<el-pagination
@@ -23,13 +28,15 @@
 	import { ref, onMounted, reactive } from 'vue'
 	import link from "../../../api/Link.js"
 	import apiUrl from "../../../api/url.js"
-	
+
+  let search = ref("")
+
 	const currentPage4 = ref(1)
-	const pageSize4 = ref(10)
+	const pageSize4 = ref(20)
 	const small = ref(false)
 	const background = ref(false)
 	const disabled = ref(false)
-	
+
 	const handleSizeChange = (val: number) => {
 		pageSize4.value = val
 	}
@@ -39,149 +46,18 @@
 	let tableData = reactive({
 		listdata:[]
 	})
+  let searchLink = () => {
+    link(apiUrl.userList,"get",{},{name:search.value}).then((ok:any) => {
+      console.log(ok)
+      tableData.listdata = ok.data
+    })
+  }
 	onMounted(() => {
 		link(apiUrl.userList).then((ok:any) => {
 			console.log(ok)
 			tableData.listdata = ok.data
 		})
 	})
-// const tableData = [
-//   {
-//     date: '2016-05-03',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-02',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-04',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-01',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-03',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-02',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-04',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-01',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },{
-//     date: '2016-05-03',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-02',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-04',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-01',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },{
-//     date: '2016-05-03',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-02',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-04',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-01',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },{
-//     date: '2016-05-03',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-02',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-04',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-01',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },{
-//     date: '2016-05-03',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-02',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-04',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-01',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },{
-//     date: '2016-05-03',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-02',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-04',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-//   {
-//     date: '2016-05-01',
-//     name: 'Tom',
-//     address: 'No. 189, Grove St, Los Angeles',
-//   },
-// ]
 </script>
 
 <style lang="scss">
